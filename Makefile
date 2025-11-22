@@ -12,6 +12,9 @@ CGO_ENABLED=0
 GOOS=$(shell go env GOOS)
 GOARCH=$(shell go env GOARCH)
 
+# Force disable CGO for all builds to avoid version conflicts
+export CGO_ENABLED
+
 .PHONY: all clean build build-all release test
 
 all: build

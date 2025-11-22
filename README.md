@@ -1,16 +1,21 @@
+# mDNS Reflector Go
+
+mDNS 报文反射工具，用于在不同网络接口之间转发多播 DNS 报文。
+
+## 功能特性
+
+- 🚀 高效的 mDNS 报文反射
+- 🔄 支持多网络接口
+- 🐳 Docker 环境友好
+- �� Homebrew 安装支持
+
 ## 安装方式
 
 ### Homebrew (推荐)
 
-#### 使用官方tap (如果已合并)
 ```bash
-brew install mdns-reflector-go
-```
-
-#### 使用个人tap
-```bash
-# 添加你的个人tap (将 username 替换为你的GitHub用户名)
-brew tap your-username/homebrew-tap
+# 添加个人 tap
+brew tap fangtianwd/homebrew-tap
 
 # 安装
 brew install mdns-reflector-go
@@ -18,49 +23,62 @@ brew install mdns-reflector-go
 # 配置接口
 mdns-reflector-go --config-ifaces en1,bridge100
 
-# 启动服务 (会弹出"本地网络"权限窗口，需要授予)
+# 启动服务
 brew services start mdns-reflector-go
-
-# 验证启动
-ps aux | grep mdns
 ```
 
 ### 从源码构建
 
-#### 前置要求
-- Go 1.19+
-
-#### 构建步骤
 ```bash
 # 克隆项目
-git clone https://github.com/your-username/mdns-reflector-go.git
-cd mdns-reflector-go
+git clone https://github.com/FangTianwd/mdns_reflector_go.git
+cd mdns_reflector_go
 
 # 构建
 make build
 
-# 安装到系统 (可选)
+# 安装
 make install
 ```
 
-## Usage
+## 使用方法
 
-    ./mdns-reflector-go -ifaces=en1,bridge100
-    
-    Usage of ./mdns-reflector-go:
-      -config-ifaces string
-            持久化需要反射mDNS报文的网络接口，使用逗号分隔，例如：-config-ifaces=eth0,en0
-      -ifaces string
-            指定需要反射mDNS报文的网络接口，使用逗号分隔，例如：-ifaces=eth0,en0
+```bash
+# 基本用法
+./mdns-reflector-go -ifaces=en1,bridge100
 
-## FAQ
+# 参数说明
+  -config-ifaces string
+        持久化需要反射mDNS报文的网络接口，使用逗号分隔
+  -ifaces string  
+        指定需要反射mDNS报文的网络接口，使用逗号分隔
+```
 
-* 如何知道需要进行反射的ifaces name？
-  
-  - orbstack侧
-    启动orbstack后，`ifconfig`观察输出接口哪个网段跟docker内部的网段匹配
-    or
-    `dns-sd -B _hap._tcp`后观察 if 列数值（代表interface index），再通过`ip link show` 最前面的数值就是if index了（你可能需要 `brew install iproute2mac` 来使用ip command）
-  
-  - 本地网络侧
-    wifi的话，直接按住option键点击wifi图标，出现一个窗口，接口名称字段就是了
+## 接口配置示例
+
+### macOS + Docker Desktop
+```bash
+mdns-reflector-go --config-ifaces en1,bridge100
+```
+
+### Linux 环境
+```bash
+mdns-reflector-go --config-ifaces eth0,docker0
+```
+
+## 开发
+
+```bash
+# 运行测试
+make test
+
+# 构建多平台二进制
+make build-all
+
+# 创建发布包
+make release
+```
+
+## 许可证
+
+MIT License
