@@ -129,14 +129,15 @@ build-all: clean
 
 # 平台构建辅助函数
 build-platforms:
-	@echo "   🖥️  $(OS_NAME): $(PLATFORMS)"
-	@for platform in $(PLATFORMS); do \
-		IFS='-' read -r os arch <<< "$$platform"; \
-		echo "     🔨 $$os/$$arch..."; \
-		ext=""; \
-		if [ "$$os" = "windows" ]; then ext=".exe"; fi; \
-		GOOS=$$os GOARCH=$$arch go build $(LDFLAGS) -trimpath -o $(BUILD_DIR)/$(BINARY_NAME)-$$platform$$ext .; \
-	done
+        @echo "   🖥️  $(OS_NAME): $(PLATFORMS)"
+        @for platform in $(PLATFORMS); do \
+                os=$$(echo $$platform | cut -d'-' -f1); \
+                arch=$$(echo $$platform | cut -d'-' -f2); \
+                echo "     🔨 $$os/$$arch..."; \
+                ext=""; \
+                if [ "$$os" = "windows" ]; then ext=".exe"; fi; \
+                GOOS=$$os GOARCH=$$arch go build $(LDFLAGS) -trimpath -o $(BUILD_DIR)/$(BINARY_NAME)-$$platform$$ext .; \
+        done
 
 # 创建发布包
 release: build-all
