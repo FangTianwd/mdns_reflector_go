@@ -23,9 +23,8 @@ func init() {
 		log.Fatal(err)
 	}
 	// 构建配置文件路径
-	configFilePath = filepath.Join(homeDir, "Library/Application Support/robotJie.mdns-reflector-go/config.yml")
+	configFilePath = filepath.Join(homeDir, "Library/Application Support/jiangshengcheng.mdns-reflector-go/config.yml")
 }
-
 
 // Config 表示配置文件结构
 type Config struct {
