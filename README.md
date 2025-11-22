@@ -1,14 +1,47 @@
-## Brew实现下载并开机自启
+## 安装方式
 
-- brew tap robotJie/homebrew-tap
+### Homebrew (推荐)
 
-- brew install mdns-reflector-go
+#### 使用官方tap (如果已合并)
+```bash
+brew install mdns-reflector-go
+```
 
-- mdns-reflector-go --config-ifaces en1,bridge100 (这个接口看自身情况，见下面FAQ)
+#### 使用个人tap
+```bash
+# 添加你的个人tap (将 username 替换为你的GitHub用户名)
+brew tap your-username/homebrew-tap
 
-- brew services start mdns-reflector-go (可能会弹出“本地网络”权限窗口，需要授予)
+# 安装
+brew install mdns-reflector-go
 
-- ps aux| grep mdns (验证，可用于观察 mdns-reflector-go 是否启动)
+# 配置接口
+mdns-reflector-go --config-ifaces en1,bridge100
+
+# 启动服务 (会弹出"本地网络"权限窗口，需要授予)
+brew services start mdns-reflector-go
+
+# 验证启动
+ps aux | grep mdns
+```
+
+### 从源码构建
+
+#### 前置要求
+- Go 1.19+
+
+#### 构建步骤
+```bash
+# 克隆项目
+git clone https://github.com/your-username/mdns-reflector-go.git
+cd mdns-reflector-go
+
+# 构建
+make build
+
+# 安装到系统 (可选)
+make install
+```
 
 ## Usage
 
