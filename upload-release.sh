@@ -10,7 +10,7 @@
 #   - 生成上传报告
 #
 # 📋 使用方法:
-#   1. 确保已创建 GitHub Release v1.0.2
+#   1. 确保已创建 GitHub Release v1.1.0
 #   2. 设置 GitHub Token (可选): export GITHUB_TOKEN=your_token
 #   3. 运行: ./upload-release.sh
 #
@@ -19,7 +19,7 @@ set -e
 
 # 配置
 REPO="FangTianwd/mdns_reflector_go"
-TAG="v1.0.2"
+TAG="v1.1.0"
 DIST_DIR="dist"
 
 # 颜色输出
