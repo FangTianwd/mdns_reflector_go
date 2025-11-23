@@ -87,8 +87,8 @@ ifconfig | grep -E "^\w+:" | awk -F: '{print $1}'
 # - 有线网 + Docker: en0,bridge100
 # - 多网卡环境: en0,en1,bridge100
 
-# 配置并保存接口设置
-mdns-reflector-go --config-ifaces en1,bridge100
+# 配置并保存接口设置 (可选: 设置调试日志)
+mdns-reflector-go --config-ifaces en1,bridge100 --log-level debug
 ```
 
 ### 🎯 3. 启动服务
@@ -131,6 +131,10 @@ docker run --rm alpine nslookup host.docker.internal
   -ifaces string
         临时指定需要反射的网络接口，使用逗号分隔
         示例: -ifaces=eth0,wlan0
+
+  -log-level string
+        设置日志级别 (debug, info, warn, error)，默认为info
+        示例: -log-level=debug
 ```
 
 ### 配置文件
@@ -145,6 +149,11 @@ ifaces:
   - en1      # WiFi 接口
   - bridge100 # Docker 网桥
   - eth0     # 有线网卡 (Linux)
+
+# 日志级别配置 (可选)
+# 可选值: debug, info, warn, error
+# 默认值为 info
+log_level: info
 ```
 
 ## 🔧 网络接口配置示例

@@ -1,0 +1,13 @@
+# mDNS反射器配置文件示例
+# 这个文件展示了如何配置mDNS反射器，包括网络接口和日志级别
+
+# 要反射mDNS报文的网络接口列表
+ifaces:
+  - en0
+  - en1
+  - wlan0
+
+# 日志级别设置 (可选)
+# 可选值: debug, info, warn, error
+# 默认值为 info
+log_level: debug
