@@ -150,18 +150,8 @@ func NewReflector(logLevel string) (*Reflector, error) {
 
 // initConfig 初始化配置路径
 func initConfig() error {
-	var err error
-	homeDir, err = os.UserHomeDir()
-	if err != nil {
-		// 如果 os.UserHomeDir() 失败，尝试使用 $HOME 环境变量
-		if homeEnv := os.Getenv("HOME"); homeEnv != "" {
-			homeDir = homeEnv
-		} else {
-			return fmt.Errorf("获取用户主目录失败: %w", err)
-		}
-	}
-
-	configFilePath = filepath.Join(homeDir, "Library/Application Support/FangTianwd.mdns-reflector-go/config.yml")
+	// 使用系统级配置目录，避免依赖用户环境变量
+	configFilePath = "/Library/Application Support/FangTianwd.mdns-reflector-go/config.yml"
 	return nil
 }
 

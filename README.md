@@ -139,10 +139,9 @@ docker run --rm alpine nslookup host.docker.internal
 
 ### 配置文件
 
-程序会在用户配置目录自动创建配置文件：
+程序会在系统配置目录自动创建配置文件：
 
-- **macOS**: `~/Library/Application Support/FangTianwd.mdns-reflector-go/config.yml`
-- **Linux**: `~/.config/FangTianwd.mdns-reflector-go/config.yml`
+- **macOS**: `/Library/Application Support/FangTianwd.mdns-reflector-go/
 
 ```yaml
 ifaces:
