@@ -87,8 +87,8 @@ ifconfig | grep -E "^\w+:" | awk -F: '{print $1}'
 # - 有线网 + Docker: en0,bridge100
 # - 多网卡环境: en0,en1,bridge100
 
-# 配置并保存接口设置 (可选: 设置调试日志)
-mdns-reflector-go --config-ifaces en1,bridge100 --log-level debug
+# 配置并保存接口设置和日志级别
+mdns-reflector-go --config-ifaces en1,bridge100 --config-log-level debug
 ```
 
 ### 🎯 3. 启动服务
@@ -124,9 +124,17 @@ docker run --rm alpine nslookup host.docker.internal
 ./mdns-reflector-go [选项]
 
 选项：
+  -config string
+        指定配置文件路径，默认为用户级配置目录
+        示例: -config=/path/to/config.yml
+
   -config-ifaces string
         持久化保存需要反射的网络接口，使用逗号分隔
         示例: -config-ifaces=eth0,wlan0
+
+  -config-log-level string
+        持久化设置日志级别 (debug, info, warn, error)
+        示例: -config-log-level=debug
 
   -ifaces string
         临时指定需要反射的网络接口，使用逗号分隔
@@ -139,21 +147,28 @@ docker run --rm alpine nslookup host.docker.internal
 
 ### 配置文件
 
-程序会在系统配置目录自动创建配置文件：
+程序会在以下位置按优先级查找配置文件：
 
-- **macOS**: `/Library/Application Support/FangTianwd.mdns-reflector-go/
+1. **自定义路径**: 通过 `-config` 参数指定
+2. **用户级配置**: `~/Library/Application Support/FangTianwd.mdns-reflector-go/config.yml`
+3. **系统级配置**: `/Library/Application Support/FangTianwd.mdns-reflector-go/config.yml` (向后兼容)
 
 ```yaml
+# 网络接口配置
 ifaces:
-  - en1      # WiFi 接口
-  - bridge100 # Docker 网桥
-  - eth0     # 有线网卡 (Linux)
+  - en1        # WiFi 接口
+  - bridge100  # Docker 网桥
+  - eth0       # 有线网卡 (Linux)
 
 # 日志级别配置 (可选)
 # 可选值: debug, info, warn, error
 # 默认值为 info
 log_level: info
 ```
+
+**配置说明：**
+- `ifaces`: 需要反射mDNS报文的网络接口列表
+- `log_level`: 日志详细程度，影响运行时输出的信息量
 
 ## 🔧 网络接口配置示例
 
