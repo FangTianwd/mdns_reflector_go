@@ -94,9 +94,9 @@ func (l *Logger) log(level, format string, args ...interface{}) {
 	message := fmt.Sprintf(format, args...)
 
 	if level == LogLevelError {
-		log.Printf(prefix + message)
+		log.Print(prefix + message)
 	} else {
-		log.Printf(prefix + message)
+		log.Print(prefix + message)
 	}
 }
 

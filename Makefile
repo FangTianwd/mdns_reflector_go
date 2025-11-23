@@ -124,7 +124,7 @@ build-all: clean
 	@$(MAKE) build-platforms PLATFORMS="$(PLATFORMS_LINUX)" OS_NAME="Linux"
 	@$(MAKE) build-platforms PLATFORMS="$(PLATFORMS_WINDOWS)" OS_NAME="Windows"
 	@echo "📊 构建统计:"
-	@ls -lh $(BUILD_DIR)/* | grep -E '\.(exe|bin|)$$' | wc -l | xargs echo "   总文件数: "
+	@ls -lh $(BUILD_DIR)/* | grep -E '\.(exe|bin)$$' | wc -l | xargs echo "   总文件数: "
 	@du -sh $(BUILD_DIR) | cut -f1 | xargs echo "   总大小: "
 
 # 平台构建辅助函数
