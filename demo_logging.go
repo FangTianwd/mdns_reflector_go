@@ -57,7 +57,16 @@ log_level: debug`
 	fmt.Println("\n5. 实际测试命令:")
 
 	// 检查配置文件是否存在
-	homeDir, _ := os.UserHomeDir()
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		// 如果 os.UserHomeDir() 失败，尝试使用 $HOME 环境变量
+		if homeEnv := os.Getenv("HOME"); homeEnv != "" {
+			homeDir = homeEnv
+		} else {
+			fmt.Printf("   # 警告：无法获取用户主目录，将使用默认路径\n")
+			homeDir = "~"
+		}
+	}
 	configPath := filepath.Join(homeDir, "Library/Application Support/FangTianwd.mdns-reflector-go/config.yml")
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
